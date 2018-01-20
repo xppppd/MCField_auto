@@ -1,9 +1,12 @@
 from matplotlib import pyplot as plt
 from PIL import Image
+from auto_materials_android import check_screenshot
+from auto_materials import pull_screenshot
 
 
-# 调试用
-# 用来打开一张图片，get具体像素点坐标
+# 调试用，截图并打开
+# 方便get具体像素点坐标
+
 def get_point():
     fig = plt.figure()
     img = Image.open('auto.png')
@@ -20,4 +23,8 @@ def onclick(event):
 
 
 if __name__ == "__main__":
+    # ios用pull_screenshot()
+    # pull_screenshot()
+    # andriod用check_screenshot()
+    check_screenshot()
     get_point()

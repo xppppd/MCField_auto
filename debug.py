@@ -1,33 +1,7 @@
-import wda
 import matplotlib.pyplot as plt
 from PIL import Image, ImageFilter
-import time
 
-# 计算战斗结算区域中的固定方框位置中的灰色面积
-# 获取图片像素值的二维数组
-# 战利品第一格坐标如下：
-'''
-(572,265)------(705,265)
-    |               |
-    |               |
-    |               |
-(572,395)------(705,395)
-'''
-
-
-# 计算目标区域里的灰色像素占比，小于1/5即出魔卡
-# 灰色像素RGB范围如下：
-# R：120～140
-# G：120～140
-# B：130～160
-
-# 战斗页面判断：截取战利品栏，判断是否存在白框
-# 白色RGB值：R==G==B
-
-
-def pull_screenshot():
-    c.screenshot('auto.png')
-
+# 用来调试图像处理逻辑
 
 fig = plt.figure()
 
@@ -40,9 +14,10 @@ items = [(572, 265, 705, 395),
 # 战利品框
 item_field = (400, 220, 550, 370)
 
+
 # 获取截图
-c = wda.Client()
-s = c.session()
+# c = wda.Client()
+# s = c.session()
 
 
 # 按目标区域截取图片
@@ -79,7 +54,6 @@ def check_item():
 
 # 确认战斗状态
 def check_status():
-    pull_screenshot()
     crop_photo(item_field)
     count = 0
     img = Image.open('1.png')
@@ -87,6 +61,7 @@ def check_status():
     list = img.getcolors(size)
     # print(len(list))
     for i in list:
+        print(i)
         r, g, b = i[1]
         if r == b == g:
             count += i[0]
@@ -101,7 +76,6 @@ def check_status():
 
 # 遍历战利品
 def check_a_lot_of_items():
-    pull_screenshot()
     for item in items:
         crop_photo(item)
         if check_item():
@@ -109,36 +83,6 @@ def check_a_lot_of_items():
     return False
 
 
-# 模拟点击开始
-def start():
-    s.double_tap(1, 1)
-    # 点击'进入战斗'
-    s.tap(330, 1910)
-    print("'进入战斗'")
-    time.sleep(0.5)
-    # 点击'开始战斗'
-    s.tap(765, 1800)
-    print("'开始战斗'")
-    time.sleep(5)
-
-
-# 自动重复刷本直到魔卡掉落
-def auto_card():
-    count = 1
-    print('正在肝第%d次' % count)
-    start()
-    while (True):
-        if check_status():
-            if check_a_lot_of_items():
-                break
-            else:
-                s.tap(765, 1800)
-                count += 1
-                start()
-                print('正在肝第%d次' % count)
-        else:
-            time.sleep(5)
-
-
 if __name__ == '__main__':
-    auto_card()
+    # auto_card()
+    check_status()
