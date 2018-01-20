@@ -12,9 +12,13 @@
 
 #更新日志
 
-- 2017-1-13:
+- 2018-1-13:
   - 添加自动刷魔卡材料脚本（刷到即停）
   - 添加无脑自动刷突破材料脚本
+
+- 2018-1-20:
+  - 添加andriod版本自动刷魔卡材料脚本（刷到即停）
+  - 添加andriod版本无脑自动刷突破材料脚本
   
 #使用说明
 -  运行环境iOS + macOS
@@ -26,3 +30,13 @@
 - 运行对应的脚本
   - 自动刷魔卡：`python3 auto_materials.py`
   - 自动刷突破材料: `python3 auto_breaking.py`
+
+-  运行环境android + windows
+  - 下载adb工具，打开手机调试模式，有问题请参考[adb连接问题](https://www.cnblogs.com/sanshuimiao/p/7809946.html)
+  - 把python脚本放在adb工具同目录下可不用配置path
+  
+- 游戏里选好目标副本
+- 运行对应的脚本
+  - 自动刷魔卡：`python3 auto_materials_andriod.py`
+  - 自动刷突破材料: `python3 auto_breaking_andriod.py`
+  
