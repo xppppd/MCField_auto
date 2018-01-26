@@ -52,10 +52,12 @@ fig = plt.figure()
 cor = [0, 0]
 # 小米6，1920x1080分辨率截取坐标
 # 战利品位置，非洲人暂时取4个掉落
-items = [(230, 475, 345, 590),
-         (390, 475, 505, 590),
-         (550, 475, 665, 590),
-         (710, 475, 825, 590)
+items = [(223, 464, 345, 584),
+         (387, 464, 509, 584),
+         (551, 464, 673, 584),
+         (715, 464, 837, 584),
+         (306, 612, 430, 732),
+         (470, 612, 594, 732)
          ]
 # 战利品框
 item_field = (200, 600, 350, 700)
@@ -72,7 +74,7 @@ def crop_photo(item):
 
 
 # 确认战利品是否包含魔卡
-def check_item():
+def check_item(index=1):
     count = 0
     img = Image.open('1.png')
     size = img.size[0] * img.size[1]
@@ -85,9 +87,14 @@ def check_item():
             count += i[0]
         if r > 120 and r < 140 and g > 120 and g < 140 and b > 130 and b < 155:
             count += i[0]
-    if count * 100 // size > 20:
-        print('没有掉落！！')
+    if count * 100 // size == 100:
         return False
+    elif count * 100 // size > 20:
+        print('材料掉落..')
+        return False
+    elif index == 0:
+        print('截取到特效小星星,重新判断!')
+        return 'BUG'
     else:
         print("魔卡掉落！！")
         return True
@@ -117,10 +124,15 @@ def check_status():
 
 # 遍历战利品
 def check_a_lot_of_items():
-    check_screenshot()
+    pull_screenshot()
     for item in items:
         crop_photo(item)
-        if check_item():
+        result = check_item(items.index(item))
+        # 如果截图bug，递归重新获取截图判定
+        if result == 'BUG':
+            time.sleep(1)
+            return check_a_lot_of_items()
+        if result:
             return True
     return False
 

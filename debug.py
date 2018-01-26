@@ -1,18 +1,24 @@
 import matplotlib.pyplot as plt
 from PIL import Image, ImageFilter
+import pytesseract
+import
 
-# 用来调试图像处理逻辑
+# 调试个函数用
 
 fig = plt.figure()
 
-# 战利品位置，非洲人暂时取4个掉落
+# 战利品位置，非洲人暂时取6个掉落
 items = [(572, 265, 705, 395),
          (572, 455, 705, 585),
          (572, 645, 705, 775),
-         (572, 835, 705, 965)
+         (572, 835, 705, 965),
+         (400, 365, 533, 495),
+         (400, 555, 533, 685),
          ]
 # 战利品框
 item_field = (400, 220, 550, 370)
+# 体力框
+power_field = (1100, 1725, 1230, 1882)
 
 
 # 获取截图
@@ -23,8 +29,8 @@ item_field = (400, 220, 550, 370)
 # 按目标区域截取图片
 def crop_photo(item):
     # 读取图片并模糊化,减少计算量
-    img = Image.open('auto.png')
-    img2 = img.filter(ImageFilter.BLUR).crop(item).resize((64, 64))
+    img = Image.open('testfile/auto.jpg')
+    img2 = img.crop(item).resize((64, 64))
     img2.save('1.png')
     # plt.imshow(img2)
     # plt.show()
@@ -83,6 +89,46 @@ def check_a_lot_of_items():
     return False
 
 
+#   体力检测，图像文字识别精确度有问题；
+def power_check():
+    img = Image.open('auto.png')
+    img2 = img.crop(power_field).rotate(90)
+    img2.save('1.png')
+    text = pytesseract.image_to_string(img2, lang='chi_sim')
+    print(text)
+    # if (int(text) < 8):
+    #     return False
+    # else:
+    #     return True
+
+
+# 模拟点击开始2，夹带了体力逻辑
+# def start2():
+#     s.double_tap(1, 1)
+#     if not power_check():
+#         # 点击加体力按钮
+#         s.tap(1175, 1950)
+#         time.sleep(0.5)
+#         # 点击使用中体力
+#         s.tap(570, 1500)
+#         time.sleep(0.5)
+#         # 取消掉体力框
+#         s.tap(1, 1)
+#         time.sleep(0.3)
+#     # 点击'进入战斗'
+#     s.tap(330, 1910)
+#     print("'进入战斗'")
+#     time.sleep(0.5)
+#     # 点击'开始战斗'
+#     s.tap(765, 1800)
+#     print("'开始战斗'")
+#     time.sleep(5)
+
+
 if __name__ == '__main__':
     # auto_card()
-    check_status()
+    # check_status()
+    # crop_photo(power_field)
+    # power_check()
+    # check_a_lot_of_items()
+    crop_photo((400, 555, 533, 685))

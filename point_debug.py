@@ -9,7 +9,7 @@ from auto_materials import pull_screenshot
 
 def get_point():
     fig = plt.figure()
-    img = Image.open('auto.png')
+    img = Image.open('testfile/auto.jpg')
     fig.canvas.mpl_connect('button_press_event', onclick)
     plt.imshow(img)
     plt.axis('off')
@@ -24,7 +24,7 @@ def onclick(event):
 
 if __name__ == "__main__":
     # ios用pull_screenshot()
-    # pull_screenshot()
+    pull_screenshot()
     # andriod用check_screenshot()
-    check_screenshot()
+    # check_screenshot()
     get_point()
